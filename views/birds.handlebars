@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>The Busy Birder</title>
+	</head>
+
+	<body>
+
+		<h3>Sightings</h3>
+		<div class="list">
+			<ul>
+			  {{#each this}}
+			  	{{#if this.name}}
+			  		<li><span class="quantity">{{this.sightings}}</span> x {{this.name}}</li>
+			  	{{/if}}
+			  {{/each}}
+			</ul>
+		</div>
+
+		<form method="POST" action="">
+			  <input type="text" name="birdname">
+			  <br>
+			  <input type="submit" value="Add Another Bird">
+		</form>
+
+
+		<p><a href='/settings'>>Settings</a></p>
+	</body>
+
+</html>
+
+
+
+
+<!-- in the template, you can iterate through the list of birds using the #each helper
+put each quantity/name pair in a list item (li)
+additionally, make the quantity a different color than the name
+add a link to a settings page (settings)
+finally, and an h3 header with text indicating that this is the bird sightings page -->
+
+
+
+
+
+

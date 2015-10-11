@@ -1,1 +1,38 @@
 /* base.css */
+
+
+
+body.main {
+	text-align: center;
+	font-family: 'Life Savers', cursive;
+}
+
+a {
+	color: #7A5229;
+}
+
+li {
+	list-style-type: none;
+}
+.wrapper {
+	background-color: #CCCCFF;
+	position: relative;
+	margin: auto;
+	width: 500px;
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-bottom: 100px;
+}
+
+.quantity {
+	color: #B40431;
+	font-weight: bold;
+}
+
+.list {
+	position: relative;
+	left: -15px;
+}
+
+
+
