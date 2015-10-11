@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(function(req, res, next) {
 	console.log(req.method + " " + req.path);
 	console.log("=====");
-	console.log("req.body: " + req.body);
+	console.log(req.body);
 	next();
 });
 
@@ -49,9 +49,12 @@ app.get('/', function(req, res){
 	res.render('index');
 });
 app.get('/birds', function(req, res){
-	var filteredBirds = birds.filter(function(ele) {
-		return ele.sightings >= req.session.minVal;
-	})
+	var filteredBirds = birds;
+	if (req.session.minval) {
+		filteredBirds = birds.filter(function(ele) {
+			return ele.sightings >= parseInt(req.session.minval);
+		});
+	}
 	res.render('birds', filteredBirds);
 });
 app.post('/birds', function(req, res) {
@@ -70,8 +73,14 @@ app.post('/birds', function(req, res) {
 	res.redirect('/birds');
 });
 app.get('/settings', function(req, res){
-	res.render('settings');
+	res.render('settings', {'val': req.session.minval});
 });
+app.post('/settings', function(req, res){
+	req.session.minval = req.body.minval;
+	console.log(req.session.minval);
+	res.redirect('/birds');
+});
+
 
 
 app.listen(port);
