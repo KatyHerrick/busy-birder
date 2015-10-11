@@ -22,7 +22,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // LOGGING for TROUBLESHOOTING
 app.use(function(req, res, next) {
 	console.log(req.method + " " + req.path);
-	console.log(res.statusCode);
+	console.log("=====");
+	console.log("req.body: " + req.body);
 	next();
 });
 
@@ -41,7 +42,6 @@ app.get('/birds', function(req, res){
 app.post('/birds', function(req, res) {
 	var found = false;
 	birdname = req.body.birdname;
-	console.log("POSTED: " + birdname);
 	for (var i = 0; i < birds.length; i++) {
 		if (birds[i].name === birdname) {
 			birds[i].sightings += 1;
