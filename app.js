@@ -5,6 +5,15 @@ var express = require('express');
 var port = 3000;
 var app = express();
 
+// set up express sessions
+var session = require('express-session');
+var sessionOptions = { 
+	secret: 'secret for signing session id', 
+	saveUninitialized: true, 
+	resave: true 
+};
+app.use(session(sessionOptions));
+
 // set up static paths
 var path = require('path');
 var publicPath = path.resolve(__dirname, "public");
@@ -19,6 +28,7 @@ app.set('view engine', 'handlebars');
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 
+
 // LOGGING for TROUBLESHOOTING
 app.use(function(req, res, next) {
 	console.log(req.method + " " + req.path);
@@ -32,12 +42,17 @@ var birds = [{'name': 'Bald Eagle', 'sightings': 3},
 			{'name': 'Yellow Billed Duck', 'sightings': 7},
 			{'name': 'Great Cormorant', 'sightings': 4}];
 
+
+
 // routing
 app.get('/', function(req, res){
 	res.render('index');
 });
 app.get('/birds', function(req, res){
-	res.render('birds', birds);
+	var filteredBirds = birds.filter(function(ele) {
+		return ele.sightings >= req.session.minVal;
+	})
+	res.render('birds', filteredBirds);
 });
 app.post('/birds', function(req, res) {
 	var found = false;
@@ -54,15 +69,12 @@ app.post('/birds', function(req, res) {
 	}
 	res.redirect('/birds');
 });
-
+app.get('/settings', function(req, res){
+	res.render('settings');
+});
 
 
 app.listen(port);
 console.log('Started server on port ' + port + ', CTRL + C to exit');
-
-
-
-
-
 
 
